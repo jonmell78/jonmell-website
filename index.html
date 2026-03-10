@@ -691,6 +691,8 @@ p { color: var(--warm-mid); }
   transition: padding-left 0.3s var(--ease);
 }
 .step:hover { padding-left: 12px; }
+.step--init { padding-left: 12px; }
+.step--init .step-num { color: var(--copper); }
 
 .step-num {
   font-family: 'Cormorant Garant', serif;
@@ -727,6 +729,7 @@ p { color: var(--warm-mid); }
   transition: background 0.3s;
 }
 .forwho-card:hover { background: var(--ink-3); }
+.forwho-card--init { background: var(--ink-3); }
 .forwho-card-num {
   font-family: 'Cormorant Garant', serif;
   font-size: 2rem;
@@ -1253,7 +1256,7 @@ p { color: var(--warm-mid); }
       <p>Every organisation is different. But one constant guides everything: a clear understanding of the value you create for your customers.</p>
     </div>
     <div class="approach-steps reveal">
-      <div class="step">
+      <div class="step step--init">
         <div class="step-num">01</div>
         <div class="step-body">
           <h3>Start with customer value</h3>
@@ -1293,7 +1296,7 @@ p { color: var(--warm-mid); }
       <h2>Who I work with</h2>
     </div>
     <div class="forwho-grid reveal">
-      <div class="forwho-card">
+      <div class="forwho-card forwho-card--init">
         <div class="forwho-card-num">I</div>
         <h3>B2B SaaS CEOs</h3>
         <p>Who need CCO-level leadership but aren't ready to hire full-time — or want to de-risk the hire with a proven operator first.</p>
@@ -1456,13 +1459,17 @@ if (burger && navLinks) {
   });
 }
 
-/* ── Service card initial highlight ─────────────────────── */
-/* Remove the --init class (default highlight on card 01) the first time
-   any service card is hovered, so all cards behave identically thereafter. */
-document.querySelectorAll('.service-card').forEach(card => {
-  card.addEventListener('mouseenter', () => {
-    document.querySelectorAll('.service-card--init').forEach(c => c.classList.remove('service-card--init'));
-  }, { once: false });
+/* ── Initial highlights (cleared on first hover within each group) ── */
+[
+  ['.service-card',  '.service-card--init'],
+  ['.step',          '.step--init'],
+  ['.forwho-card',   '.forwho-card--init'],
+].forEach(([groupSel, initSel]) => {
+  document.querySelectorAll(groupSel).forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      document.querySelectorAll(initSel).forEach(c => c.classList.remove(initSel.slice(1)));
+    });
+  });
 });
 
 /* ── Scroll reveal ───────────────────────────────────────── */
