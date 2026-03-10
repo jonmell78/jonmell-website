@@ -1,0 +1,9 @@
+# Dev server scripts
+serve.rb
+/tmp/
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
