@@ -358,41 +358,6 @@ p { color: var(--warm-mid); }
   animation: fadeUp 0.9s 0.55s var(--ease) forwards;
 }
 
-.hero-stats {
-  display: flex;
-  gap: 0;
-  border-top: 1px solid var(--rule);
-  opacity: 0;
-  animation: fadeUp 0.9s 0.7s var(--ease) forwards;
-}
-.hero-stat {
-  flex: 1;
-  padding: 28px 0 0;
-  border-right: 1px solid var(--rule);
-}
-.hero-stat:last-child { border-right: none; padding-left: 28px; }
-.hero-stat:first-child { padding-right: 28px; }
-.hero-stat:not(:first-child):not(:last-child) { padding: 28px 28px 0; }
-
-.stat-num {
-  display: block;
-  font-family: 'Cormorant Garant', serif;
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
-  font-weight: 300;
-  letter-spacing: -0.04em;
-  color: var(--parchment);
-  line-height: 1;
-  margin-bottom: 6px;
-}
-.stat-num span { color: var(--copper); font-size: 0.6em; vertical-align: super; }
-.stat-label {
-  font-size: 0.72rem;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  color: var(--warm-mid);
-  text-transform: uppercase;
-  line-height: 1.4;
-}
 
 .hero-right {
   display: flex;
@@ -535,7 +500,14 @@ p { color: var(--warm-mid); }
 
 .service-card--featured {
   grid-column: span 2;
+}
+
+/* Initial highlighted state — cleared by JS on first card interaction */
+.service-card--init {
   background: var(--ink-2);
+}
+.service-card--init::before {
+  transform: scaleX(1);
 }
 
 
@@ -993,15 +965,6 @@ p { color: var(--warm-mid); }
   .hero-right { padding: 0 0 60px; }
   .hero-headline { font-size: clamp(2.5rem, 8vw, 3.5rem); }
   .hero-actions { flex-direction: column; }
-  .hero-stats { flex-direction: column; gap: 0; }
-  .hero-stat,
-  .hero-stat:first-child,
-  .hero-stat:last-child,
-  .hero-stat:not(:first-child):not(:last-child) {
-    padding: 20px 0; border-right: none; border-bottom: 1px solid var(--rule);
-  }
-  .hero-stat:last-child { border-bottom: none; }
-
   .services-grid { grid-template-columns: 1fr; }
   .service-card--featured { grid-column: span 1; }
   .forwho-grid { grid-template-columns: 1fr; }
@@ -1058,20 +1021,6 @@ p { color: var(--warm-mid); }
       <a href="#contact" class="btn btn-primary">Start a conversation</a>
       <a href="#services" class="btn btn-outline">See how I can help</a>
     </div>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <span class="stat-num">15<span>+</span></span>
-        <span class="stat-label">Years in<br/>Customer Success</span>
-      </div>
-      <div class="hero-stat">
-        <span class="stat-num">£1B<span>+</span></span>
-        <span class="stat-label">ARR<br/>Influenced</span>
-      </div>
-      <div class="hero-stat">
-        <span class="stat-num">50<span>+</span></span>
-        <span class="stat-label">CS Teams<br/>Built &amp; Scaled</span>
-      </div>
-    </div>
   </div>
 
   <div class="hero-right">
@@ -1126,7 +1075,7 @@ p { color: var(--warm-mid); }
 
     <div class="services-grid reveal">
 
-      <div class="service-card service-card--featured">
+      <div class="service-card service-card--featured service-card--init">
         <div class="service-num">01</div>
         <h3>Fractional Chief Customer Officer</h3>
         <p>Embedded CCO-level leadership — typically 2–3 days per week — without the full-time cost. I own the CS strategy, lead your team, and report directly to the CEO or board.</p>
@@ -1506,6 +1455,15 @@ if (burger && navLinks) {
     });
   });
 }
+
+/* ── Service card initial highlight ─────────────────────── */
+/* Remove the --init class (default highlight on card 01) the first time
+   any service card is hovered, so all cards behave identically thereafter. */
+document.querySelectorAll('.service-card').forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    document.querySelectorAll('.service-card--init').forEach(c => c.classList.remove('service-card--init'));
+  }, { once: false });
+});
 
 /* ── Scroll reveal ───────────────────────────────────────── */
 const observer = new IntersectionObserver((entries) => {
