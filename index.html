@@ -276,11 +276,20 @@ p { color: var(--warm-mid); }
 /* ── HERO ────────────────────────────────────────────────── */
 .hero {
   min-height: 100svh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.hero-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 40px;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 420px;
   gap: 0;
-  position: relative;
-  overflow: hidden;
   align-items: center;
 }
 
@@ -288,7 +297,7 @@ p { color: var(--warm-mid); }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 140px 60px 100px 40px;
+  padding: 140px 60px 100px 0;
   position: relative;
   z-index: 2;
 }
@@ -389,7 +398,7 @@ p { color: var(--warm-mid); }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 140px 40px 100px 0;
+  padding: 140px 0 100px 0;
   opacity: 0;
   animation: fadeIn 1s 0.5s ease forwards;
 }
@@ -942,9 +951,10 @@ p { color: var(--warm-mid); }
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 1024px) {
-  .hero { grid-template-columns: 1fr; min-height: auto; }
-  .hero-left { padding: 120px 40px 40px; }
-  .hero-right { padding: 0 40px 60px; justify-content: flex-start; }
+  .hero { min-height: auto; }
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-left { padding: 120px 0 40px; }
+  .hero-right { padding: 0 0 60px; justify-content: flex-start; }
   .hero-portrait-wrap { max-width: 260px; }
   .services-grid { grid-template-columns: 1fr 1fr; }
   .service-card--featured { grid-column: span 2; }
@@ -978,8 +988,9 @@ p { color: var(--warm-mid); }
   .nav-links.open a { padding: 10px 0; font-size: 0.82rem; }
   .nav-links.open .btn { margin-top: 8px; width: 100%; justify-content: center; }
 
-  .hero-left { padding: 100px 24px 40px; }
-  .hero-right { padding: 0 24px 60px; }
+  .hero-inner { padding: 0 24px; }
+  .hero-left { padding: 100px 0 40px; }
+  .hero-right { padding: 0 0 60px; }
   .hero-headline { font-size: clamp(2.5rem, 8vw, 3.5rem); }
   .hero-actions { flex-direction: column; }
   .hero-stats { flex-direction: column; gap: 0; }
@@ -1026,7 +1037,8 @@ p { color: var(--warm-mid); }
 
 <!-- ── HERO ────────────────────────────────────────────── -->
 <section class="hero" id="home">
-  <div class="hero-left container" style="max-width:none; padding-left: clamp(24px,5vw,80px); padding-right: 40px;">
+  <div class="hero-inner">
+  <div class="hero-left">
     <div class="hero-eyebrow">
       <div class="hero-eyebrow-line"></div>
       <span class="hero-eyebrow-text">Fractional CCO &amp; CS Consulting</span>
@@ -1071,6 +1083,7 @@ p { color: var(--warm-mid); }
       </div>
     </div>
   </div>
+  </div><!-- /.hero-inner -->
 </section>
 
 <!-- ── STRIP ────────────────────────────────────────────── -->
