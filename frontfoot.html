@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frontfoot — Raise the bar</title>
+  <meta name="description" content="Frontfoot builds custom AI agents that give your CS team the answer, the tone, and the confidence to respond without escalating.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F8F6F1;
+      --ink: #1A1916;
+      --ink-mid: #4A4844;
+      --ink-light: #8A8880;
+      --ink-faint: #C8C6C0;
+      --border: rgba(26,25,22,0.12);
+      --border-strong: rgba(26,25,22,0.22);
+      --accent: #1A1916;
+      --white: #FFFFFF;
+      --section-gap: 7rem;
+      --text-gap: 1.4rem;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(248,246,241,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border);
+      padding: 0 2.5rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 400;
+      letter-spacing: -0.2px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-cta {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      background: transparent;
+      border: 0.5px solid var(--border-strong);
+      padding: 9px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-cta:hover {
+      background: var(--ink);
+      color: var(--cream);
+      border-color: var(--ink);
+    }
+
+    /* Layout */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 11rem 0 7rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .hero-eyebrow {
+      font-family: 'Playfair Display', serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.1s;
+    }
+
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 6.5vw, 68px);
+      font-weight: 400;
+      line-height: 1.08;
+      letter-spacing: -1.5px;
+      color: var(--ink);
+      max-width: 780px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.25s;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--ink-mid);
+    }
+
+    .hero-sub {
+      font-size: 19px;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--ink-mid);
+      max-width: 540px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.4s;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Sections */
+    section {
+      padding: var(--section-gap) 0;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 2.5rem;
+    }
+
+    .section-pull {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 400;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+      color: var(--ink);
+      max-width: 660px;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-body {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--ink-mid);
+      max-width: 620px;
+    }
+
+    .section-body p { margin-bottom: var(--text-gap); }
+    .section-body p:last-child { margin-bottom: 0; }
+
+    /* Two-column layout for problem section */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .problem-left .section-pull {
+      font-size: clamp(28px, 4vw, 44px);
+      margin-bottom: 0;
+    }
+
+    /* Three cards */
+    .three-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 0.5px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 3.5rem;
+    }
+
+    .three-item {
+      background: var(--cream);
+      padding: 2rem 1.75rem;
+      transition: background 0.2s;
+    }
+
+    .three-item:hover { background: var(--white); }
+
+    .three-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 400;
+      color: var(--ink-faint);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .three-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.01em;
+    }
+
+    .three-body {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.65;
+    }
+
+    /* Outcomes */
+    .outcomes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 0.5px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 3rem;
+    }
+
+    .outcome-item {
+      background: var(--cream);
+      padding: 2rem 1.75rem;
+      transition: background 0.2s;
+    }
+
+    .outcome-item:hover { background: var(--white); }
+
+    .outcome-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+
+    .outcome-body {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.65;
+    }
+
+    /* How we work — horizontal rule list */
+    .how-items {
+      margin-top: 3rem;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .how-item {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 3rem;
+      padding: 2rem 0;
+      border-bottom: 0.5px solid var(--border);
+      align-items: start;
+    }
+
+    .how-item-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      padding-top: 0.15rem;
+    }
+
+    .how-item-body {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.75;
+    }
+
+    /* Why section with pull quote treatment */
+    .why-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.8fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .why-left {
+      position: sticky;
+      top: 5rem;
+    }
+
+    .why-left .section-pull {
+      font-size: clamp(22px, 3vw, 30px);
+      margin-bottom: 0;
+    }
+
+    /* Contact */
+    .contact-section {
+      background: var(--ink);
+      color: var(--cream);
+      padding: var(--section-gap) 0;
+      border-bottom: none;
+    }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .contact-head {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 4.5vw, 48px);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      color: var(--cream);
+    }
+
+    .contact-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .contact-sub {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(248,246,241,0.65);
+    }
+
+    .contact-btn {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      background: var(--cream);
+      border: none;
+      padding: 14px 32px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      align-self: flex-start;
+      letter-spacing: 0.01em;
+    }
+
+    .contact-btn:hover { opacity: 0.85; }
+
+    /* Footer */
+    footer {
+      background: var(--ink);
+      border-top: 0.5px solid rgba(248,246,241,0.12);
+      padding: 2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: rgba(248,246,241,0.5);
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(248,246,241,0.35);
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.5rem; }
+      .container { padding: 0 1.5rem; }
+      .hero { padding: 9rem 0 5rem; }
+      .problem-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .three-grid { grid-template-columns: 1fr; }
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .how-item { grid-template-columns: 1fr; gap: 0.75rem; }
+      .why-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .why-left { position: static; }
+      .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      :root { --section-gap: 4.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-headline { letter-spacing: -0.5px; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Frontfoot</a>
+    <a href="#contact" class="nav-cta">Book a call</a>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="container">
+      <div class="hero-eyebrow">Raise the bar</div>
+      <h1 class="hero-headline">"Let me check with my manager" <em>is costing you more than you think.</em></h1>
+      <p class="hero-sub">Every time a CSM says those six words, your customer's expectations rise, your team burns time on an internal conversation, and the answer is usually still no.</p>
+    </div>
+  </div>
+
+  <!-- Problem -->
+  <section>
+    <div class="container">
+      <div class="section-label reveal">The problem</div>
+      <div class="problem-grid">
+        <div class="problem-left reveal">
+          <p class="section-pull">It is less about the people, more the situation they are put in.</p>
+        </div>
+        <div class="section-body reveal">
+          <p>Multiply that across hundreds of accounts and you have a structural drag on capacity, retention, and customer satisfaction.</p>
+          <p>Difficult customer conversations require policy knowledge, commercial judgment, and the confidence to hold a position clearly and quickly. Without the right support, even experienced CSMs escalate when they should not have to. Expectations rise. The answer is still no. And three people's time has been spent to get there.</p>
+          <p>Most AI tools respond by removing the human from the loop entirely. Frontfoot takes a different view.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we do -->
+  <section>
+    <div class="container">
+      <div class="section-label reveal">What we do</div>
+      <p class="section-pull reveal">We build custom AI agents that give your team the answer, the tone, and the confidence to respond without escalating.</p>
+      <div class="section-body reveal">
+        <p>Each agent is built around your commercial context, your policy, and your customer base. Less a platform you configure yourself, more a working system delivered and maintained by people who have led CS organisations across B2B SaaS businesses in Europe, the US, and APAC.</p>
+        <p>The goal is straightforward: to raise every response to the standard of your best one.</p>
+      </div>
+      <div class="three-grid reveal">
+        <div class="three-item">
+          <div class="three-num">01</div>
+          <div class="three-title">Coach</div>
+          <div class="three-body">The CSM stays in control. The agent tells them what to say, how to say it, and why before they reply.</div>
+        </div>
+        <div class="three-item">
+          <div class="three-num">02</div>
+          <div class="three-title">Draft</div>
+          <div class="three-body">The agent writes the response. The CSM reviews and sends. Faster, consistent, on-policy with a human still accountable.</div>
+        </div>
+        <div class="three-item">
+          <div class="three-num">03</div>
+          <div class="three-title">Respond</div>
+          <div class="three-body">For defined conversation types, the agent handles it autonomously. Your team is freed for higher-value work.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What changes -->
+  <section>
+    <div class="container">
+      <div class="section-label reveal">What changes</div>
+      <p class="section-pull reveal">The results are measurable from the first weeks of deployment.</p>
+      <div class="outcomes-grid reveal">
+        <div class="outcome-item">
+          <div class="outcome-title">Faster answers</div>
+          <div class="outcome-body">Customers get a clear response quickly. Even when the answer is no, clarity delivered fast is better than a slow maybe.</div>
+        </div>
+        <div class="outcome-item">
+          <div class="outcome-title">Fewer escalations</div>
+          <div class="outcome-body">Your team handles difficult conversations with confidence. Managers stop being pulled into conversations they should not need to touch.</div>
+        </div>
+        <div class="outcome-item">
+          <div class="outcome-title">Greater capacity</div>
+          <div class="outcome-body">More accounts per CSM. The same team handles a growing book without the overhead growing with it.</div>
+        </div>
+        <div class="outcome-item">
+          <div class="outcome-title">A team that improves</div>
+          <div class="outcome-body">The coaching layer builds real commercial judgment over time. CSMs grow through difficult conversations rather than being shielded from them.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How we work -->
+  <section>
+    <div class="container">
+      <div class="section-label reveal">How we work</div>
+      <p class="section-pull reveal">You move fast, show results early, and look like the person who made something happen.</p>
+      <div class="section-body reveal">
+        <p>Most CS platform implementations require months of internal resource, a significant budget approval process, and a long wait before anything reaches a customer. The internal cost of championing one is often greater than the platform cost itself: the business case, the procurement cycle, the IT involvement, the implementation project.</p>
+        <p>Frontfoot works differently. We handle the build and bring the frameworks. Your team is involved in the decisions that matter and shielded from the ones that do not.</p>
+      </div>
+      <div class="how-items reveal">
+        <div class="how-item">
+          <div class="how-item-label">Start narrow and deep</div>
+          <div class="how-item-body">One use case, one customer segment, clear metrics. Most engagements begin with negotiation and out-of-terms handling, where the problem is most acute and the impact is easiest to measure.</div>
+        </div>
+        <div class="how-item">
+          <div class="how-item-label">Live within weeks</div>
+          <div class="how-item-body">Most engagements are live within weeks, not quarters. You get a working agent in front of your team quickly, with results you can point to before the quarter is out.</div>
+        </div>
+        <div class="how-item">
+          <div class="how-item-label">Prove, then expand</div>
+          <div class="how-item-body">Once the value is established, we grow the scope. The agent gets smarter about your customers over time. That knowledge stays with you.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Frontfoot -->
+  <section>
+    <div class="container">
+      <div class="section-label reveal">Why Frontfoot</div>
+      <div class="why-inner">
+        <div class="why-left reveal">
+          <p class="section-pull">Built by people who have lived the problem.</p>
+        </div>
+        <div class="section-body reveal">
+          <p>Frontfoot was built by people who have led CS teams and lived the escalation problem firsthand. We know what good looks like in a difficult customer conversation: the right tone, the right answer, delivered quickly and clearly.</p>
+          <p>We bring that experience into the agent itself. The frameworks for negotiation, tone, and policy handling are built into the technology, not layered on top of it. That is what raises every response to the standard of your best one.</p>
+          <p>Less a vendor relationship, more an embedded partnership. We stay involved as the agent evolves, as your customer base changes, and as the scope grows.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="contact-head reveal">Ready to raise the bar?</div>
+        <div class="contact-right reveal">
+          <p class="contact-sub">If the escalation problem sounds familiar, we would like to talk. A short conversation is usually enough to work out whether Frontfoot is the right fit.</p>
+          <a href="mailto:hello@frontfoot.ai" class="contact-btn">Book a call</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Frontfoot</div>
+    <div class="footer-copy">© 2026 Frontfoot. All rights reserved.</div>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
